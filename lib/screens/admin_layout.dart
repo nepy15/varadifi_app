@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:varadifi_app/screens/misc.dart';
 
@@ -38,6 +39,8 @@ class _FormLayout extends StatefulWidget {
 
 class _FormLayoutState extends State<_FormLayout> {
 
+  final db = FirebaseFirestore.instance;
+
   int letterCount = 97;
   int lettersLeft = 97;
   bool noLettersLeft = false;
@@ -57,6 +60,7 @@ class _FormLayoutState extends State<_FormLayout> {
 
                 onSubmitted: (value) {
                   title = value;
+                  db.collection('events').doc(value).set({"name": value});
                   print(title);
                 },
                 decoration: InputDecoration(
@@ -104,14 +108,14 @@ class _FormLayoutState extends State<_FormLayout> {
                   Container(
                     height: 124,
                     width: 124,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xFF121212)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xFF121212), border: Border.all(width: 1, color: Color(0x45FFFFFF))),
                     child: Center(child: Text('Image'),),
                   ),
                   SizedBox(width: 50),
                   Container(
                     width: 124,
                     height: 48,
-                    decoration: BoxDecoration(color: Color(0xFF121212), borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(color: Color(0xFF121212), borderRadius: BorderRadius.circular(10), border: Border.all(width: 1, color: Color(0x45FFFFFF))),
                     child: Center(child: Text('Upload'),),
                   )
                 ],
