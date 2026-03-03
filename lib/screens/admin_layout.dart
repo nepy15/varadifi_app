@@ -46,22 +46,29 @@ class _FormLayoutState extends State<_FormLayout> {
   bool noLettersLeft = false;
   String title = '';
   String description = '';
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return Form(
+      key: _formKey,
+      child: 
         SizedBox(
           width: 301,
           child: Column(
             children: [
-              TextField(
+
+              TextFormField(
                 style: TextStyle(color: Color(0xFFFFFFFF)),
 
-                onSubmitted: (value) {
-                  title = value;
-                  db.collection('events').doc(value).set({"name": value});
-                  print(title);
+                validator: (value) {
+                  if(value == null || value.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  title = value.toString();
                 },
                 decoration: InputDecoration(
                  labelText: 'Title',
@@ -74,7 +81,7 @@ class _FormLayoutState extends State<_FormLayout> {
 
               SizedBox(height: 40),
 
-              TextField(
+              TextFormField(
                 keyboardType: TextInputType.text,
                 style: TextStyle(color: Color(0xFFFFFFFF)),
                 textAlign: TextAlign.center,
@@ -82,9 +89,14 @@ class _FormLayoutState extends State<_FormLayout> {
                 maxLines: 6,
                 maxLength: 97,
 
-                onSubmitted: (value) {
-                  description = value;
-                  print(description);
+                validator: (value) {
+                  if(value == null || value.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  description = value.toString();
                 },
                 onChanged: (value) {
                   setState(() {
@@ -112,18 +124,39 @@ class _FormLayoutState extends State<_FormLayout> {
                     child: Center(child: Text('Image'),),
                   ),
                   SizedBox(width: 50),
-                  Container(
+                  SizedBox(
                     width: 124,
                     height: 48,
-                    decoration: BoxDecoration(color: Color(0xFF121212), borderRadius: BorderRadius.circular(10), border: Border.all(width: 1, color: Color(0x45FFFFFF))),
-                    child: Center(child: Text('Upload'),),
+                    child: Center(
+                      child: Container(
+                        width: 124,
+                        height: 48,
+                        decoration: BoxDecoration(color: Color(0xFF121212), borderRadius: BorderRadius.circular(10), border: Border.all(width: 1, color: Color(0x45FFFFFF))),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Color(0x80FFFFFF),
+                            backgroundColor: Color(0xFF121212),
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))
+                          ),
+                          onPressed: () {
+                            if(_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+
+                              db.collection('events').doc(title).set({"Title": title, "Description": description});
+                            }
+                          },
+                          child: Center(child: Text('Submit'),),
+                        ),
+                    ),
+                    )
+
+                    
                   )
                 ],
-              )
+              ),
             ],
           ),
-        )
-      ],
+        ),
     );
   }
 }
