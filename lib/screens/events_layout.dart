@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'misc.dart';
 import 'package:flutter/material.dart';
-import 'package:varadifi_app/screens/misc.dart';
-
-final db = FirebaseFirestore.instance;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventsPage extends StatelessWidget {
   const EventsPage({super.key});
@@ -10,34 +8,61 @@ class EventsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
       backgroundColor: backgroundColor,
+      appBar: appBar,
       body: Center(
-        child: ListView(
-          children: [
-            SizedBox(height: 23),
-            Text(
-              'Events',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFFFFFFFF)
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 65),
-            _EventsCard(title: 'Title', description: "This is a test for event descriptions and other optional things, like tags, good to knows etc.", cardImage: 'assets/events.png'),
-            SizedBox(height: 40),
-            _EventsCard(title: 'Title', description: "This is a test for event descriptions and other optional things, like tags, good to knows etc.", cardImage: 'assets/events.png'),
-            SizedBox(height: 40),
-            _EventsCard(title: 'Title', description: "This is a test for event descriptions and other optional things, like tags, good to knows etc.", cardImage: 'assets/events.png'),
-            SizedBox(height: 40),
-            _EventsCard(title: 'Title', description: "This is a test for event descriptions and other optional things, like tags, good to knows etc.", cardImage: 'assets/events.png'),
-            SizedBox(height: 40),
-            
-          ],
+        child: Padding(
+          padding: EdgeInsetsGeometry.fromLTRB(0, 50, 0, 50),
+          child: _EventsLayout(),
         ),
-      )
+      ),
+    );
+  }
+}
+
+class _EventsLayout extends StatefulWidget {
+  @override
+  _EventsLayoutState createState() => _EventsLayoutState();
+}
+
+class _EventsLayoutState extends State<_EventsLayout> {
+  final db = FirebaseFirestore.instance;
+  final eventsList = <_EventsCard>{};
+
+  int eventCount() {
+    int count = 0;
+    db.collection('events').count().get().then((res) => count = res.count!);
+
+    return count;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: db.collection('events').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator(color: Color(0xFFFFFFFF));
+        }
+
+        var docs = snapshot.data!.docs;
+
+        return ListView.builder(
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            var data = docs[index];
+
+            return Padding(
+              padding: EdgeInsetsGeometry.only(bottom: 25),
+              child: _EventsCard(
+                title: data['Title'],
+                description: data['Description'],
+                cardImage: 'assets/events.png',
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -46,7 +71,7 @@ class _EventsCard extends StatelessWidget {
   const _EventsCard({
     required this.title,
     required this.description,
-    required this.cardImage
+    required this.cardImage,
   });
 
   final String title;
@@ -65,14 +90,30 @@ class _EventsCard extends StatelessWidget {
           Container(
             height: 145,
             width: width,
-            decoration: BoxDecoration( borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)) ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
             child: ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-              child: Positioned.fill(child: Image.asset(cardImage, fit: BoxFit.cover))
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: Positioned.fill(
+                child: Image.asset(cardImage, fit: BoxFit.cover),
+              ),
             ),
           ),
           Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)), color: Color(0xFF121212)),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+              color: Color(0xFF121212),
+            ),
             width: width,
             height: 73,
             child: Center(
@@ -81,17 +122,33 @@ class _EventsCard extends StatelessWidget {
                   SizedBox(
                     width: width,
                     height: 34,
-                    child: Text(title, style: TextStyle(fontSize: 25, fontWeight: FontWeight(400), color: Color(0xFFFFFFFF)), textAlign: TextAlign.center),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight(400),
+                        color: Color(0xFFFFFFFF),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   SizedBox(
                     width: width,
                     height: 38,
-                    child: Text(description, style: TextStyle(fontSize: 10, fontWeight: FontWeight(50), color: Color(0xFFFFFFFF)), textAlign: TextAlign.center),
-                  )
+                    child: Text(
+                      description,
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight(50),
+                        color: Color(0xFFFFFFFF),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

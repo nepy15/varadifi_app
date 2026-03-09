@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+final db = FirebaseFirestore.instance;
 
 const Color backgroundColor = Color(0xFF080A08);
 AppBar appBar = AppBar(
@@ -15,5 +18,13 @@ class EventData {
   EventData({
     this.title,
     this.description,
+  });
+}
+
+void readData() async {
+  await db.collection("events").get().then((event) {
+    for (var doc in event.docs) {
+      print("${doc.id} => ${doc.data()}");
+    }
   });
 }

@@ -10,6 +10,8 @@ class HomePage extends StatelessWidget {
 
   final int event = 0;
   final int shop = 1;
+  final int admin = 2;
+  final int newEvent = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +23,21 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 120),
-              _CardLayout(title: 'Events', imagePath: 'assets/events.png', pageID: 2),
+              _CardLayout(
+                title: 'Events',
+                imagePath: 'assets/events.png',
+                pageID: newEvent,
+              ),
               SizedBox(height: 65),
-              _CardLayout(title: 'Shop', imagePath: 'assets/shop.png', pageID: 1)
+              _CardLayout(
+                title: 'Shop',
+                imagePath: 'assets/shop.png',
+                pageID: admin,
+              ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
@@ -36,7 +46,7 @@ class _CardLayout extends StatelessWidget {
   const _CardLayout({
     required this.title,
     required this.imagePath,
-    required this.pageID
+    required this.pageID,
   });
 
   final String title;
@@ -51,22 +61,41 @@ class _CardLayout extends StatelessWidget {
       child: InkWell(
         splashColor: Colors.grey,
         onTap: () {
-          switch(pageID) {
+          switch (pageID) {
             case 0:
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => const EventsPage()));
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (context) => const EventsPage()),
+              );
               break;
             case 1:
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => const ShopPage()));
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (context) => const ShopPage()),
+              );
               break;
             case 2:
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => const AdminPage()));
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (context) => const AdminPage()),
+              );
               break;
             default:
-              showDialog(context: context, barrierDismissible: true, builder: (_) => AlertDialog(
-                backgroundColor: backgroundColor,
-                title: Text('Error', style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(230, 100, 0, 0))),
-                content: Text('Page ID not found!'),
-              ));
+              showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (_) => AlertDialog(
+                  backgroundColor: backgroundColor,
+                  title: Text(
+                    'Error',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(230, 100, 0, 0),
+                    ),
+                  ),
+                  content: Text('Page ID not found!'),
+                ),
+              );
           }
         },
         child: Column(
@@ -74,24 +103,41 @@ class _CardLayout extends StatelessWidget {
             Container(
               width: 350,
               height: 87,
-              decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+              ),
               child: ClipRRect(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
                 child: Positioned.fill(
                   child: Image.asset(
                     imagePath,
                     fit: BoxFit.cover,
-                    alignment: Alignment.center
+                    alignment: Alignment.center,
                   ),
-                )
+                ),
               ),
             ),
             SizedBox(
               height: 153,
-              child: Center(child: Text(title, style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 40, fontWeight: FontWeight.w700))),
-            )
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: Color(0xFFFFFFFF),
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
           ],
-        )
+        ),
       ),
     );
   }
