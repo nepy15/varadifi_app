@@ -168,10 +168,58 @@ class _FormLayoutState extends State<_FormLayout> {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
 
-                            db.collection('events').doc(title).set({
-                              "Title": title,
-                              "Description": description,
-                            });
+                            db
+                                .collection('events')
+                                .doc(title)
+                                .set({
+                                  "Title": title,
+                                  "Description": description,
+                                })
+                                .then(
+                                  (value) {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      builder: (_) => AlertDialog(
+                                        backgroundColor: backgroundColor,
+                                        title: Text(
+                                          'Successfully submitted!',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                              230,
+                                              0,
+                                              230,
+                                              0,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  onError: (e) {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      builder: (_) => AlertDialog(
+                                        backgroundColor: backgroundColor,
+                                        title: Text(
+                                          'Error',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                              230,
+                                              100,
+                                              0,
+                                              0,
+                                            ),
+                                          ),
+                                        ),
+                                        content: Text(e),
+                                      ),
+                                    );
+                                  },
+                                );
                           }
                         },
                         child: Center(child: Text('Submit')),
