@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
               _CardLayout(
                 title: 'Shop',
                 imagePath: 'assets/shop.png',
-                pageID: admin,
+                pageID: shop,
               ),
             ],
           ),
