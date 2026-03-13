@@ -38,19 +38,44 @@ class _ShopLayout extends StatelessWidget {
       height: 375,
       child: Center(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () {
-                print("pressed");
+                print('button pressed');
               },
+
               style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(360),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                fixedSize: Size.fromRadius(30),
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(16),
+                minimumSize: const Size(50, 50),
+                backgroundColor: Color(0x302B2B2B),
+                overlayColor: Colors.green,
               ),
-              child: Text("<"),
+              child: const Icon(
+                Icons.arrow_back,
+                size: 24,
+                color: Color(0xFFFFFFFF),
+              ),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                print('button pressed');
+              },
+
+              style: ElevatedButton.styleFrom(
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(16),
+                minimumSize: const Size(50, 50),
+                backgroundColor: Color(0x302B2B2B),
+                overlayColor: Colors.green,
+              ),
+              child: const Icon(
+                Icons.arrow_forward,
+                size: 24,
+                color: Color(0xFFFFFFFF),
+              ),
             ),
           ],
         ),
