@@ -22,7 +22,7 @@ class ShopPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 80),
             _ShopLayout(),
           ],
         ),
@@ -32,53 +32,111 @@ class ShopPage extends StatelessWidget {
 }
 
 class _ShopLayout extends StatelessWidget {
+  final double spacer = 35;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 375,
       child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                print('button pressed');
-              },
-
-              style: ElevatedButton.styleFrom(
-                shape: const CircleBorder(),
-                padding: const EdgeInsets.all(16),
-                minimumSize: const Size(50, 50),
-                backgroundColor: Color(0x302B2B2B),
-                overlayColor: Colors.green,
-              ),
-              child: const Icon(
-                Icons.arrow_back,
-                size: 24,
-                color: Color(0xFFFFFFFF),
-              ),
-            ),
-
-            ElevatedButton(
-              onPressed: () {
-                print('button pressed');
-              },
-
-              style: ElevatedButton.styleFrom(
-                shape: const CircleBorder(),
-                padding: const EdgeInsets.all(16),
-                minimumSize: const Size(50, 50),
-                backgroundColor: Color(0x302B2B2B),
-                overlayColor: Colors.green,
-              ),
-              child: const Icon(
-                Icons.arrow_forward,
-                size: 24,
-                color: Color(0xFFFFFFFF),
-              ),
-            ),
+            SizedBox(width: spacer),
+            _ShopCard(id: 0),
+            SizedBox(width: spacer),
+            _ShopCard(id: 1),
+            SizedBox(width: spacer),
+            _ShopCard(id: 2),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ShopCard extends StatelessWidget {
+  const _ShopCard({required this.id});
+
+  final int id;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 375,
+      width: 270,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Color(0xFF171717),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 270,
+            height: 249.82,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+              child: Positioned.fill(
+                child: Image.asset('shop.png', fit: BoxFit.cover),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 270,
+            height: 69,
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    "Product",
+                    style: TextStyle(
+                      color: Color(0xFFFFFFFF),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                  ),
+                  Text(
+                    "€9.99",
+                    style: TextStyle(
+                      color: Color(0xFFFFFFFF),
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF202020),
+              minimumSize: const Size(240, 44),
+              overlayColor: Color(0xFFFFFFFF),
+            ),
+
+            onPressed: () {
+              print("Bought");
+            },
+
+            child: Text(
+              "Buy",
+              style: TextStyle(
+                color: Color(0xFFFFFFFF),
+                fontWeight: FontWeight.normal,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
