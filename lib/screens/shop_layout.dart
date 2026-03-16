@@ -22,7 +22,7 @@ class ShopPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 80),
+            SizedBox(height: 150),
             _ShopLayout(),
           ],
         ),
@@ -42,12 +42,8 @@ class _ShopLayout extends StatelessWidget {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
+            for (int i = 0; i < 3; i++) _ShopCard(id: i),
             SizedBox(width: spacer),
-            _ShopCard(id: 0),
-            SizedBox(width: spacer),
-            _ShopCard(id: 1),
-            SizedBox(width: spacer),
-            _ShopCard(id: 2),
           ],
         ),
       ),
@@ -63,6 +59,7 @@ class _ShopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left: _ShopLayout().spacer),
       height: 375,
       width: 270,
       decoration: BoxDecoration(
