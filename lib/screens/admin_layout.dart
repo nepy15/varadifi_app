@@ -8,7 +8,7 @@ class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: newAppBar,
       backgroundColor: backgroundColor,
       body: Center(
         child: Column(

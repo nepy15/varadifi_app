@@ -9,7 +9,7 @@ class EventsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: appBar,
+      appBar: newAppBar,
       body: Center(
         child: Padding(
           padding: EdgeInsetsGeometry.fromLTRB(0, 50, 0, 50),
