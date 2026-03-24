@@ -31,6 +31,7 @@ void readData() async {
   });
 }
 
+//appbar
 AppBar newAppBar = AppBar(
   centerTitle: true,
   title: Text(
@@ -44,12 +45,13 @@ AppBar newAppBar = AppBar(
   backgroundColor: Color(0x60131313),
 );
 
+//navbar
 class NavBar extends StatefulWidget {
   @override
-  _NavBarState createState() => _NavBarState();
+  NavBarState createState() => NavBarState();
 }
 
-class _NavBarState extends State<NavBar> {
+class NavBarState extends State<NavBar> {
   int selectedIndex = 0;
 
   final items = [
