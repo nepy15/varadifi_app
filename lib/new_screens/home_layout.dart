@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:varadifi_app/screens/misc.dart';
 
+const miniScreenMaxWidth = 390;
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -51,7 +53,7 @@ class _FeaturedEventState extends State<_FeaturedEvent> {
             Image.asset('assets/events.png', fit: BoxFit.cover),
             Positioned.fill(
               child: Transform.scale(
-                scale: 1.45,
+                scale: 1.6,
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -73,7 +75,7 @@ class _FeaturedEventState extends State<_FeaturedEvent> {
                 bottom: 0,
                 top: 116.5,
                 left: 15,
-                right: 56,
+                right: 15,
               ),
               height: 311,
               child: Column(
@@ -110,8 +112,8 @@ class _FeaturedEventState extends State<_FeaturedEvent> {
                   Padding(
                     padding: EdgeInsetsGeometry.symmetric(vertical: 16),
                     child: SizedBox(
-                      width: 278,
                       height: 72,
+                      width: 278,
                       child: Text(
                         'Join thousands for a weekend that will redefine yout path. Registration opens Monday.',
                         style: GoogleFonts.inter(
@@ -240,11 +242,11 @@ class _FeaturedMerch extends StatefulWidget {
 class _FeaturedMerchState extends State<_FeaturedMerch> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 390,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: 32,
             width: double.infinity,
             child: Stack(
