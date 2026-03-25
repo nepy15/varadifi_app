@@ -240,51 +240,146 @@ class _FeaturedMerch extends StatefulWidget {
 }
 
 class _FeaturedMerchState extends State<_FeaturedMerch> {
+  final List<Map<String, String>> _merchItems = [
+    {'image': 'assets/shop.png', 'title': 'Hoodie', 'price': '\$20'},
+    {'image': 'assets/events.png', 'title': 'T-Shirt', 'price': '\$15'},
+    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
+    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
+    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
+    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
+    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 32,
+          width: double.infinity,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                left: 24,
+                child: Text(
+                  'FEATURED MERCH',
+                  style: GoogleFonts.manrope(
+                    color: Color(0xFFE5E2E1),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 24,
+                    letterSpacing: -0.6,
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 24,
+                child: SizedBox(
+                  width: 93.04,
+                  child: Row(
+                    children: [
+                      Text(
+                        'SHOP ALL',
+                        style: GoogleFonts.inter(
+                          color: Color(0xFF3FE56C),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          letterSpacing: 1.4,
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Color(0xFF3FE56C),
+                        size: 8.75,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 24),
+        SizedBox(
+          height: 580,
+          child: ScrollConfiguration(
+            behavior: AllScrollBehavior(),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _merchItems.length,
+              itemBuilder: (context, index) => _ShopItem(
+                imagePath: _merchItems[index]['image']!,
+                title: _merchItems[index]['title']!,
+                price: _merchItems[index]['price']!,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ShopItem extends StatefulWidget {
+  final String imagePath;
+  final String title;
+  final String price;
+
+  const _ShopItem({
+    required this.imagePath,
+    required this.title,
+    required this.price,
+  });
+
+  @override
+  _ShopItemState createState() => _ShopItemState();
+}
+
+class _ShopItemState extends State<_ShopItem> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 390,
+      width: 512,
+      height: 580,
       child: Column(
         children: [
+          Container(
+            margin: EdgeInsets.only(left: 0, right: 15),
+            height: 500,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              color: Color(0xFF131313),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Image.asset(widget.imagePath, fit: BoxFit.cover),
+            ),
+          ),
           SizedBox(
-            height: 32,
-            width: double.infinity,
+            height: 52,
             child: Stack(
-              alignment: Alignment.center,
               children: [
                 Positioned(
+                  top: 0,
                   left: 24,
                   child: Text(
-                    'FEATURED MERCH',
+                    widget.title,
                     style: GoogleFonts.manrope(
                       color: Color(0xFFE5E2E1),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 24,
-                      letterSpacing: -0.6,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
                 ),
                 Positioned(
-                  right: 24,
-                  child: SizedBox(
-                    width: 93.04,
-                    child: Row(
-                      children: [
-                        Text(
-                          'SHOP ALL',
-                          style: GoogleFonts.inter(
-                            color: Color(0xFF3FE56C),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            letterSpacing: 1.4,
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: Color(0xFF3FE56C),
-                          size: 8.75,
-                        ),
-                      ],
+                  bottom: 0,
+                  left: 24,
+                  child: Text(
+                    widget.price,
+                    style: GoogleFonts.manrope(
+                      color: Color(0xFFBBCBB8),
+                      fontWeight: FontWeight.w300,
+                      fontSize: 16,
                     ),
                   ),
                 ),
