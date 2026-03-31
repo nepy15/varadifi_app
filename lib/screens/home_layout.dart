@@ -11,7 +11,6 @@ class HomePage extends StatelessWidget {
   final int event = 0;
   final int shop = 1;
   final int admin = 2;
-  final int newEvent = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +25,13 @@ class HomePage extends StatelessWidget {
               _CardLayout(
                 title: 'Events',
                 imagePath: 'assets/events.png',
-                pageID: newEvent,
+                pageID: event,
               ),
               SizedBox(height: 65),
               _CardLayout(
                 title: 'Shop',
                 imagePath: 'assets/shop.png',
-                pageID: admin,
+                pageID: shop,
               ),
             ],
           ),
