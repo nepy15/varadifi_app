@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:varadifi_app/new_screens/home_layout.dart';
 import 'package:varadifi_app/screens/misc.dart';
+import 'dart:ui';
+import 'package:varadifi_app/final_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,12 +23,6 @@ class MainApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Color(0xFF171717),
-        appBar: newAppBar,
-        body: HomePage(),
-      ),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: FinalView());
   }
 }

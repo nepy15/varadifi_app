@@ -3,6 +3,11 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:varadifi_app/new_screens/home_layout.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:varadifi_app/screens/events_layout.dart';
+import 'package:varadifi_app/screens/shop_layout.dart';
+import 'package:varadifi_app/final_view.dart';
 
 final db = FirebaseFirestore.instance;
 
@@ -49,13 +54,16 @@ AppBar newAppBar = AppBar(
 
 //navbar
 class NavBar extends StatefulWidget {
+  NavBar({required this.onPressed, required this.currentIndex});
+
+  final Function(int) onPressed;
+  final int currentIndex;
+
   @override
   NavBarState createState() => NavBarState();
 }
 
 class NavBarState extends State<NavBar> {
-  int selectedIndex = 0;
-
   final items = [
     {'icon': Icons.home, 'label': 'HOME'},
     {'icon': Icons.calendar_month, 'label': 'EVENTS'},
@@ -73,11 +81,11 @@ class NavBarState extends State<NavBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(items.length, (index) {
-          final isSelected = index == selectedIndex;
+          final isSelected = index == widget.currentIndex;
 
           return GestureDetector(
             onTap: () {
-              setState(() => selectedIndex = index);
+              widget.onPressed(index);
             },
             child: AnimatedContainer(
               width: 100,

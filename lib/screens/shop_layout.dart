@@ -2,13 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:varadifi_app/screens/misc.dart';
 
+import 'dart:ui';
+
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: newAppBar,
+      //appBar: newAppBar,
       backgroundColor: backgroundColor,
       body: Center(
         child: Column(

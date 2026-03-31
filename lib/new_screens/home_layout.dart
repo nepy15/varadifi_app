@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:varadifi_app/screens/misc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 const miniScreenMaxWidth = 390;
+final db = FirebaseFirestore.instance;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -14,14 +16,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: backgroundColor,
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-          child: NavBar(),
-        ),
+      body: ListView(
+        children: [_FeaturedEvent(), _FeaturedMerch(), _GatheringCard()],
       ),
-      body: ListView(children: [_FeaturedEvent(), _FeaturedMerch()]),
     );
   }
 }
@@ -37,157 +34,178 @@ class _FeaturedEventState extends State<_FeaturedEvent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 427.5,
-      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        color: Color(0xFF131313),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: Stack(
-          fit: StackFit.expand,
-          alignment: Alignment.bottomCenter,
-          children: [
-            Image.asset('assets/events.png', fit: BoxFit.cover),
-            Positioned.fill(
-              child: Transform.scale(
-                scale: 1.6,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        Color(0xFF131313),
-                        Color(0x50131313),
-                        Color(0x00131313),
-                      ],
-                      stops: [0.0, 0.5, 1.0],
+    return StreamBuilder(
+      stream: db.collection('events').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final event = snapshot.data!.docs
+              .where((doc) => doc['featured'] == true)
+              .first;
+          eventTitle = event['title'];
+          eventDescription = event['description'];
+        } else if (!snapshot.hasData) {
+          return Text(
+            'Adatok betöltése...',
+            style: GoogleFonts.inter(
+              color: Color(0xFF3FE56C),
+              fontWeight: FontWeight.w800,
+              fontSize: 20,
+            ),
+          );
+        }
+        return Container(
+          height: 427.5,
+          margin: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            color: Color(0xFF131313),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: Stack(
+              fit: StackFit.expand,
+              alignment: Alignment.bottomCenter,
+              children: [
+                Image.asset('assets/events.png', fit: BoxFit.cover),
+                Positioned.fill(
+                  child: Transform.scale(
+                    scale: 1.6,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            Color(0xFF131313),
+                            Color(0x50131313),
+                            Color(0x00131313),
+                          ],
+                          stops: [0.0, 0.5, 1.0],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                bottom: 0,
-                top: 116.5,
-                left: 15,
-                right: 15,
-              ),
-              height: 311,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9999),
-                      color: Color(0xFF00C853),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'MAJOR EVENT',
-                        style: GoogleFonts.inter(
-                          color: Color(0xFF004C1B),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                    ),
+                Container(
+                  margin: EdgeInsets.only(
+                    bottom: 0,
+                    top: 116.5,
+                    left: 15,
+                    right: 15,
                   ),
-                  Text(
-                    'EVENT TITLE',
-                    style: GoogleFonts.manrope(
-                      color: Color(0xFFE5E2E1),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 36,
-                      letterSpacing: -1.8,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsGeometry.symmetric(vertical: 16),
-                    child: SizedBox(
-                      height: 72,
-                      width: 278,
-                      child: Text(
-                        'Join thousands for a weekend that will redefine yout path. Registration opens Monday.',
-                        style: GoogleFonts.inter(
-                          color: Color(0xFFBBCBB8),
-                          fontWeight: FontWeight.w300,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    spacing: 16.0,
+                  height: 311,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      _Button(
-                        splashColor: Color(0xFF3FE56C),
-                        shadow: [
-                          BoxShadow(
-                            color: Color(0x203FE56C),
-                            blurRadius: 25,
-                            spreadRadius: -5,
-                            offset: Offset(0, 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9999),
+                          color: Color(0xFF00C853),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'MAJOR EVENT',
+                            style: GoogleFonts.inter(
+                              color: Color(0xFF004C1B),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              letterSpacing: 2,
+                            ),
                           ),
-                          BoxShadow(
-                            color: Color(0x2000C853),
-                            blurRadius: 10,
-                            spreadRadius: -6,
-                            offset: Offset(0, 8),
+                        ),
+                      ),
+                      Text(
+                        eventTitle,
+                        style: GoogleFonts.manrope(
+                          color: Color(0xFFE5E2E1),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 36,
+                          letterSpacing: -1.8,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsGeometry.symmetric(vertical: 16),
+                        child: SizedBox(
+                          height: 72,
+                          width: 278,
+                          child: Text(
+                            eventDescription,
+                            style: GoogleFonts.inter(
+                              color: Color(0xFFBBCBB8),
+                              fontWeight: FontWeight.w300,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        spacing: 16.0,
+                        children: [
+                          _Button(
+                            splashColor: Color(0xFF3FE56C),
+                            shadow: [
+                              BoxShadow(
+                                color: Color(0x203FE56C),
+                                blurRadius: 25,
+                                spreadRadius: -5,
+                                offset: Offset(0, 20),
+                              ),
+                              BoxShadow(
+                                color: Color(0x2000C853),
+                                blurRadius: 10,
+                                spreadRadius: -6,
+                                offset: Offset(0, 8),
+                              ),
+                            ],
+
+                            onPressed: () {
+                              print('pressed');
+                            },
+
+                            gradient: LinearGradient(
+                              begin: Alignment(-0.3, -1.6),
+                              end: Alignment(0.3, 1.6),
+                              colors: [Color(0xFF3FE56C), Color(0xFF00C853)],
+                            ),
+                            child: Text(
+                              'Leszek!',
+                              style: GoogleFonts.manrope(
+                                color: Color(0xFF002108),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: -0.4,
+                              ),
+                            ),
+                          ),
+                          _Button(
+                            onPressed: () {
+                              print('pressed');
+                            },
+                            splashColor: Color(0x15E5E2E1),
+                            color: Color(0x95201F1F),
+                            child: Text(
+                              'Details',
+                              style: GoogleFonts.manrope(
+                                color: Color(0xFFE5E2E1),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: -0.4,
+                              ),
+                            ),
                           ),
                         ],
-
-                        onPressed: () {
-                          print('pressed');
-                        },
-
-                        gradient: LinearGradient(
-                          begin: Alignment(-0.3, -1.6),
-                          end: Alignment(0.3, 1.6),
-                          colors: [Color(0xFF3FE56C), Color(0xFF00C853)],
-                        ),
-                        child: Text(
-                          'Get Tickets',
-                          style: GoogleFonts.manrope(
-                            color: Color(0xFF002108),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: -0.4,
-                          ),
-                        ),
                       ),
-                      _Button(
-                        onPressed: () {
-                          print('pressed');
-                        },
-                        splashColor: Color(0x15E5E2E1),
-                        color: Color(0x95201F1F),
-                        child: Text(
-                          'Details',
-                          style: GoogleFonts.manrope(
-                            color: Color(0xFFE5E2E1),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: -0.4,
-                          ),
-                        ),
-                      ),
+                      SizedBox(height: 32),
                     ],
                   ),
-                  SizedBox(height: 32),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -240,82 +258,94 @@ class _FeaturedMerch extends StatefulWidget {
 }
 
 class _FeaturedMerchState extends State<_FeaturedMerch> {
-  final List<Map<String, String>> _merchItems = [
-    {'image': 'assets/shop.png', 'title': 'Hoodie', 'price': '\$20'},
-    {'image': 'assets/events.png', 'title': 'T-Shirt', 'price': '\$15'},
-    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
-    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
-    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
-    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
-    {'image': 'assets/shop.png', 'title': 'Pants', 'price': '\$10'},
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 32,
-          width: double.infinity,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                left: 24,
-                child: Text(
-                  'FEATURED MERCH',
-                  style: GoogleFonts.manrope(
-                    color: Color(0xFFE5E2E1),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 24,
-                    letterSpacing: -0.6,
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 24,
-                child: SizedBox(
-                  width: 93.04,
-                  child: Row(
-                    children: [
-                      Text(
-                        'SHOP ALL',
-                        style: GoogleFonts.inter(
-                          color: Color(0xFF3FE56C),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          letterSpacing: 1.4,
-                        ),
+    return StreamBuilder(
+      stream: db.collection('shopItems').snapshots(),
+      builder: (context, snapshot) {
+        final docs = snapshot.data?.docs;
+        if (!snapshot.hasData) {
+          return Text(
+            'Adatok betöltése...',
+            style: GoogleFonts.inter(
+              color: Color(0xFF3FE56C),
+              fontWeight: FontWeight.w800,
+              fontSize: 20,
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        return Column(
+          children: [
+            SizedBox(
+              height: 32,
+              width: double.infinity,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    left: 24,
+                    child: Text(
+                      'FEATURED MERCH',
+                      style: GoogleFonts.manrope(
+                        color: Color(0xFFE5E2E1),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24,
+                        letterSpacing: -0.6,
                       ),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Color(0xFF3FE56C),
-                        size: 8.75,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 24),
-        SizedBox(
-          height: 580,
-          child: ScrollConfiguration(
-            behavior: AllScrollBehavior(),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _merchItems.length,
-              itemBuilder: (context, index) => _ShopItem(
-                imagePath: _merchItems[index]['image']!,
-                title: _merchItems[index]['title']!,
-                price: _merchItems[index]['price']!,
+                  Positioned(
+                    right: 24,
+                    child: SizedBox(
+                      width: 93.04,
+                      child: Row(
+                        children: [
+                          Text(
+                            'SHOP ALL',
+                            style: GoogleFonts.inter(
+                              color: Color(0xFF3FE56C),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              letterSpacing: 1.4,
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Color(0xFF3FE56C),
+                            size: 8.75,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ),
-      ],
+            SizedBox(height: 24),
+            SizedBox(
+              height: 580,
+              child: ScrollConfiguration(
+                behavior: AllScrollBehavior(),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: docs!.length,
+                  itemBuilder: (context, index) {
+                    final data = docs[index].data();
+                    return _ShopItem(
+                      imagePath: 'assets/VaradifiIcon.png',
+                      title: data['title'] as String,
+                      price: data['price'] as double,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -323,7 +353,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
 class _ShopItem extends StatefulWidget {
   final String imagePath;
   final String title;
-  final String price;
+  final double price;
 
   const _ShopItem({
     required this.imagePath,
@@ -348,7 +378,7 @@ class _ShopItemState extends State<_ShopItem> {
             height: 500,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
-              color: Color(0xFF131313),
+              color: Color(0xFF1C1B1B),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(24),
@@ -375,7 +405,7 @@ class _ShopItemState extends State<_ShopItem> {
                   bottom: 0,
                   left: 24,
                   child: Text(
-                    widget.price,
+                    "\$${widget.price}",
                     style: GoogleFonts.manrope(
                       color: Color(0xFFBBCBB8),
                       fontWeight: FontWeight.w300,
@@ -384,6 +414,174 @@ class _ShopItemState extends State<_ShopItem> {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GatheringCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 48),
+      height: 550,
+      child: Column(
+        children: [
+          SizedBox(
+            width: 342,
+            height: 50,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Text(
+                    "THIS WEEK'S GATHERINGS",
+                    style: GoogleFonts.manrope(
+                      color: Color(0xFFE5E2E1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      letterSpacing: -0.6,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: Text(
+                    "Don't walk the path alone",
+                    style: GoogleFonts.inter(
+                      color: Color(0xFFE5E2E1),
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          _EventCard(
+            title: "Youth Gathering",
+            time: "Wednesday, 19:00 PM",
+            place: "Round Hall",
+            icon: Icons.people,
+          ),
+          _EventCard(
+            title: "Service",
+            time: "Thursday, 18:00 PM",
+            place: "Main Hall",
+            icon: Icons.church,
+          ),
+          _EventCard(
+            title: "Service",
+            time: "Sunday, 10:00 & 18:00",
+            place: "place",
+            icon: Icons.church,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EventCard extends StatefulWidget {
+  final String title;
+  final String time;
+  final String place;
+  final IconData icon;
+
+  const _EventCard({
+    required this.title,
+    required this.time,
+    required this.place,
+    required this.icon,
+  });
+
+  @override
+  _EventCardState createState() => _EventCardState();
+}
+
+class _EventCardState extends State<_EventCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      height: 104,
+      decoration: BoxDecoration(
+        color: Color(0xFF1C1B1B),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 20,
+            left: 20,
+            bottom: 20,
+            child: SizedBox(
+              width: 254.47,
+              height: 64,
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: 20),
+                    width: 46.78,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Color(0x103FE56C),
+                      borderRadius: BorderRadius.circular(9999),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        widget.icon,
+                        size: 23,
+                        color: Color(0xFF3FE56C),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 187.69,
+                    height: 64,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.title,
+                          style: GoogleFonts.manrope(
+                            color: Color(0xFFE5E2E1),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          '${widget.time} - ${widget.place}',
+                          style: GoogleFonts.inter(
+                            color: Color(0xFFBBCBB8),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 20,
+            right: 20,
+            bottom: 20,
+            child: SizedBox(
+              height: 64,
+              child: Center(
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Color(0xFFBBCBB8),
+                  size: 25,
+                ),
+              ),
             ),
           ),
         ],

@@ -2,6 +2,8 @@ import 'misc.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'dart:ui';
+
 class EventsPage extends StatelessWidget {
   const EventsPage({super.key});
 
@@ -9,7 +11,7 @@ class EventsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: newAppBar,
+      //appBar: newAppBar,
       body: Center(
         child: Padding(
           padding: EdgeInsetsGeometry.fromLTRB(0, 50, 0, 50),
@@ -55,8 +57,8 @@ class _EventsLayoutState extends State<_EventsLayout> {
             return Padding(
               padding: EdgeInsetsGeometry.only(bottom: 25),
               child: _EventsCard(
-                title: data['Title'],
-                description: data['Description'],
+                title: data['title'],
+                description: data['description'],
                 cardImage: 'assets/events.png',
               ),
             );
