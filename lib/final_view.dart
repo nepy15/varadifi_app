@@ -50,6 +50,7 @@ class FinalViewState extends State<FinalView> {
           children: [
             Positioned.fill(
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
                 onPageChanged: (value) {
                   setState(() {
                     currentIndex = value;
