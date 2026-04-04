@@ -15,7 +15,14 @@ class _EventsLayoutState extends State<EventsLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Center(child: ListView(children: [_Header(), _EventsList()])),
+      body: Center(
+        child: ListView(
+          children: [
+            _Header(),
+            SizedBox(height: 1400, child: _EventsList()),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -80,11 +87,12 @@ class _EventsListState extends State<_EventsList> {
         final events = snapshot.data!.docs;
         return Container(
           padding: EdgeInsets.only(bottom: 60),
-          height: 700,
           child: ListView.builder(
             itemCount: events.length,
             itemBuilder: (context, index) {
+              final isLast = index == events.length - 1;
               return _EventCard(
+                marginBottom: isLast ? 800 : 24,
                 month: events[index]['month'],
                 day: events[index]['day'],
                 title: events[index]['title'],
@@ -101,6 +109,8 @@ class _EventsListState extends State<_EventsList> {
 }
 
 class _EventCard extends StatelessWidget {
+  final double marginBottom;
+
   final String month;
   final int day;
   final String title;
@@ -109,6 +119,7 @@ class _EventCard extends StatelessWidget {
   final String location;
 
   const _EventCard({
+    this.marginBottom = 24,
     required this.month,
     required this.day,
     required this.title,
@@ -125,7 +136,12 @@ class _EventCard extends StatelessWidget {
         color: Color(0xFF201F1F),
         borderRadius: BorderRadius.circular(12),
       ),
-      margin: EdgeInsets.all(24),
+      margin: EdgeInsets.only(
+        top: 24,
+        bottom: marginBottom,
+        right: 24,
+        left: 24,
+      ),
       child: Column(
         children: [
           SizedBox(
@@ -178,12 +194,13 @@ class _EventCard extends StatelessWidget {
             child: Column(
               children: [
                 Row(
+                  spacing: 5,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(
-                      Icons.cloud_circle,
+                      Icons.timer_outlined,
                       color: Color(0xFF3FE56C),
-                      size: 15,
+                      size: 18,
                     ),
                     Text(
                       time,
@@ -196,9 +213,10 @@ class _EventCard extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  spacing: 5,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.location_on, color: Color(0xFF3FE56C), size: 15),
+                    Icon(Icons.location_on, color: Color(0xFF3FE56C), size: 18),
                     Text(
                       location,
                       style: GoogleFonts.inter(
