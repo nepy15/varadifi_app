@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:varadifi_app/new_screens/events_layout.dart';
-import 'package:varadifi_app/screens/misc.dart';
+import 'package:varadifi_app/misc.dart';
 import 'package:varadifi_app/new_screens/home_layout.dart';
 import 'package:varadifi_app/new_screens/shop_layout.dart';
 

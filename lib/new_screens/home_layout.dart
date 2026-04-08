@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:varadifi_app/screens/misc.dart';
+import 'package:varadifi_app/misc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 const miniScreenMaxWidth = 390;
