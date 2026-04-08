@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:varadifi_app/final_view.dart';
 import 'package:varadifi_app/screens/misc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,7 +10,9 @@ const miniScreenMaxWidth = 390;
 final db = FirebaseFirestore.instance;
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.onNavigate});
+
+  final Function(int) onNavigate;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class HomePage extends StatelessWidget {
       extendBody: true,
       backgroundColor: backgroundColor,
       body: ListView(
-        children: [_FeaturedEvent(), _FeaturedMerch(), _GatheringCard()],
+        children: [_FeaturedEvent(), _FeaturedMerch(onNavigate: onNavigate), _GatheringCard()],
       ),
     );
   }
@@ -253,6 +256,10 @@ class _Button extends StatelessWidget {
 }
 
 class _FeaturedMerch extends StatefulWidget {
+  final Function(int) onNavigate;
+
+  const _FeaturedMerch({required this.onNavigate});
+
   @override
   _FeaturedMerchState createState() => _FeaturedMerchState();
 }
@@ -301,7 +308,11 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                     right: 24,
                     child: SizedBox(
                       width: 93.04,
-                      child: Row(
+                      child: GestureDetector(
+                        onTap: () {
+                          widget.onNavigate(2);
+                        },
+                        child: Row(
                         children: [
                           Text(
                             'SHOP ALL',
@@ -319,6 +330,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                           ),
                         ],
                       ),
+                      )
                     ),
                   ),
                 ],

@@ -7,8 +7,6 @@ import 'package:varadifi_app/new_screens/shop_layout.dart';
 
 import 'dart:ui';
 
-List<Widget> screens = [const HomePage(), EventsLayout(), ShopLayout()];
-
 class FinalView extends StatefulWidget {
   @override
   FinalViewState createState() => FinalViewState();
@@ -32,6 +30,9 @@ class FinalViewState extends State<FinalView> {
   }
 
   void animateToPage(int page) {
+    setState(() {
+      currentIndex = page;
+    });
     _pageController.animateToPage(
       page,
       duration: Duration(milliseconds: 300),
@@ -41,6 +42,11 @@ class FinalViewState extends State<FinalView> {
 
   @override
   Widget build(BuildContext context) {
+    final screens = [
+      HomePage(onNavigate: animateToPage),
+      EventsLayout(),
+      ShopLayout(),
+    ];
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: newAppBar,
