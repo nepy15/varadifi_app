@@ -3,11 +3,6 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:varadifi_app/new_screens/home_layout.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:varadifi_app/screens/events_layout.dart';
-import 'package:varadifi_app/screens/shop_layout.dart';
-import 'package:varadifi_app/final_view.dart';
 
 final db = FirebaseFirestore.instance;
 

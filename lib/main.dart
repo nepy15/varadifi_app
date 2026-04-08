@@ -2,9 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:varadifi_app/new_screens/home_layout.dart';
-import 'package:varadifi_app/screens/misc.dart';
-import 'dart:ui';
 import 'package:varadifi_app/final_view.dart';
 
 Future<void> main() async {
