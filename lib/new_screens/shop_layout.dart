@@ -100,7 +100,7 @@ class _ProductListState extends State<_ProductList> {
             },
           );
         }
-        return CircularProgressIndicator();
+        return CircularProgressIndicator(color: Color(0xFF3FE56C));
       },
     );
   }
