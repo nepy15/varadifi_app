@@ -19,7 +19,11 @@ class HomePage extends StatelessWidget {
       extendBody: true,
       backgroundColor: backgroundColor,
       body: ListView(
-        children: [_FeaturedEvent(), _FeaturedMerch(onNavigate: onNavigate), _GatheringCard()],
+        children: [
+          _FeaturedEvent(),
+          _FeaturedMerch(onNavigate: onNavigate),
+          _GatheringCard(),
+        ],
       ),
     );
   }
@@ -312,24 +316,24 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                           widget.onNavigate(2);
                         },
                         child: Row(
-                        children: [
-                          Text(
-                            'SHOP ALL',
-                            style: GoogleFonts.inter(
-                              color: Color(0xFF3FE56C),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              letterSpacing: 1.4,
+                          children: [
+                            Text(
+                              'SHOP ALL',
+                              style: GoogleFonts.inter(
+                                color: Color(0xFF3FE56C),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                letterSpacing: 1.4,
+                              ),
                             ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Color(0xFF3FE56C),
-                            size: 8.75,
-                          ),
-                        ],
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Color(0xFF3FE56C),
+                              size: 8.75,
+                            ),
+                          ],
+                        ),
                       ),
-                      )
                     ),
                   ),
                 ],
@@ -580,7 +584,7 @@ class _EventCardState extends State<_EventCard> {
               ),
             ),
           ),
-          Positioned(
+          /*Positioned(
             top: 20,
             right: 20,
             bottom: 20,
@@ -594,7 +598,7 @@ class _EventCardState extends State<_EventCard> {
                 ),
               ),
             ),
-          ),
+            ),*/
         ],
       ),
     );
