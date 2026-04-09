@@ -20,10 +20,33 @@ class HomePage extends StatelessWidget {
       backgroundColor: backgroundColor,
       body: ListView(
         children: [
-          _FeaturedEvent(),
+          _HeroImage(),
+          //_FeaturedEvent(),
           _FeaturedMerch(onNavigate: onNavigate),
           _GatheringCard(),
         ],
+      ),
+    );
+  }
+}
+
+class _HeroImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 18, vertical: 48),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: Color(0x15FFFFFF),
+      ),
+      height: 350,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: Stack(
+          fit: StackFit.expand,
+          alignment: Alignment.bottomCenter,
+          children: [],
+        ),
       ),
     );
   }
@@ -298,7 +321,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                   Positioned(
                     left: 24,
                     child: Text(
-                      'FEATURED MERCH',
+                      'Varadifis merch-ek',
                       style: GoogleFonts.manrope(
                         color: Color(0xFFE5E2E1),
                         fontWeight: FontWeight.w800,
@@ -310,7 +333,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                   Positioned(
                     right: 24,
                     child: SizedBox(
-                      width: 93.04,
+                      width: 60.04,
                       child: GestureDetector(
                         onTap: () {
                           widget.onNavigate(2);
@@ -318,7 +341,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                         child: Row(
                           children: [
                             Text(
-                              'SHOP ALL',
+                              'BOLT',
                               style: GoogleFonts.inter(
                                 color: Color(0xFF3FE56C),
                                 fontWeight: FontWeight.bold,
@@ -329,7 +352,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                             Icon(
                               Icons.arrow_forward,
                               color: Color(0xFF3FE56C),
-                              size: 8.75,
+                              size: 10.75,
                             ),
                           ],
                         ),
@@ -454,7 +477,7 @@ class _GatheringCard extends StatelessWidget {
                   top: 0,
                   left: 0,
                   child: Text(
-                    "THIS WEEK'S GATHERINGS",
+                    "HETI ALKALMAK",
                     style: GoogleFonts.manrope(
                       color: Color(0xFFE5E2E1),
                       fontWeight: FontWeight.bold,
@@ -467,7 +490,7 @@ class _GatheringCard extends StatelessWidget {
                   bottom: 0,
                   left: 0,
                   child: Text(
-                    "Don't walk the path alone",
+                    "Talalkozunk miden heten!",
                     style: GoogleFonts.inter(
                       color: Color(0xFFE5E2E1),
                       fontWeight: FontWeight.w300,
@@ -479,21 +502,21 @@ class _GatheringCard extends StatelessWidget {
             ),
           ),
           _EventCard(
-            title: "Youth Gathering",
-            time: "Wednesday, 19:00 PM",
-            place: "Round Hall",
+            title: "Ifi alkalom",
+            time: "Szerda, 19:00",
+            place: "Kerekterem",
             icon: Icons.people,
           ),
           _EventCard(
-            title: "Service",
-            time: "Thursday, 18:00 PM",
-            place: "Main Hall",
+            title: "Gyulekezeti alkalom",
+            time: "Csutortok, 18:00",
+            place: "Nagyterem",
             icon: Icons.church,
           ),
           _EventCard(
-            title: "Service",
-            time: "Sunday, 10:00 & 18:00",
-            place: "place",
+            title: "Gyulekezeti alkalom",
+            time: "Vasarnap, 10:00 & 18:00",
+            place: "Nagyterem",
             icon: Icons.church,
           ),
         ],

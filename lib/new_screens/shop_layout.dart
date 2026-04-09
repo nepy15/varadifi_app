@@ -215,6 +215,12 @@ class _ProductItem extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return _BuyForm();
+                  },
+                );
                 print('pressed');
               },
               splashColor: Color(0x803FE56C),
@@ -234,6 +240,99 @@ class _ProductItem extends StatelessWidget {
             ),
           ), //button
         ],
+      ),
+    );
+  }
+}
+
+class _BuyForm extends StatefulWidget {
+  @override
+  _BuyFormState createState() => _BuyFormState();
+}
+
+class _BuyFormState extends State<_BuyForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        height: 300,
+        margin: EdgeInsets.symmetric(vertical: 150, horizontal: 33),
+        decoration: BoxDecoration(
+          border: BoxBorder.all(color: Color(0x803FE56C), width: 1.5),
+          color: Color(0xFF080A08),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.all(15),
+                child: Text(
+                  'Vasarlas',
+                  style: GoogleFonts.manrope(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFE5E2E1),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Teljes nev',
+                        labelStyle: GoogleFonts.inter(
+                          color: Color(0xFFE5E2E1),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF00C853)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF3FE56C)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Stack(
+                children: [
+                  Positioned(
+                    bottom: 0,
+                    left: 15,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Vissza'),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 15,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {}
+                      },
+                      child: Text('Vasarlas'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
