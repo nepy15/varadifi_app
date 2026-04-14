@@ -39,6 +39,7 @@ class _Header extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            spacing: 15,
             children: [
               Text(
                 'Alkalmak',
@@ -48,6 +49,21 @@ class _Header extends StatelessWidget {
                   letterSpacing: -2.4,
                   fontSize: 48,
                 ),
+              ),
+              IconButton(
+                icon: Badge.count(
+                  backgroundColor: Color(0x803FE56C),
+                  isLabelVisible: true,
+                  count: 3,
+                  child: const Icon(
+                    Icons.shopping_bag,
+                    color: Color(0xFF3FE56C),
+                    size: 32,
+                  ),
+                ),
+                onPressed: () {
+                  print('Shopping bag icon pressed');
+                },
               ),
             ],
           ),
@@ -284,8 +300,14 @@ class _BuyFormState extends State<_BuyForm> {
               Container(
                 margin: EdgeInsets.all(15),
                 child: Column(
+                  spacing: 15,
                   children: [
                     TextFormField(
+                      style: GoogleFonts.inter(
+                        color: Color(0xFFE5E2E1),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
                       decoration: InputDecoration(
                         labelText: 'Teljes nev',
                         labelStyle: GoogleFonts.inter(
@@ -301,35 +323,123 @@ class _BuyFormState extends State<_BuyForm> {
                           borderSide: BorderSide(color: Color(0xFF3FE56C)),
                           borderRadius: BorderRadius.circular(15),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0x80E53935)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        errorStyle: GoogleFonts.inter(
+                          color: Color(0xFFE53935),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFE53935)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Kérem adja meg a teljes nevét';
+                        }
+                        return null;
+                      },
+                    ), //teljes nev
+                    TextFormField(
+                      style: GoogleFonts.inter(
+                        color: Color(0xFFE5E2E1),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Telefonszám',
+                        labelStyle: GoogleFonts.inter(
+                          color: Color(0xFFE5E2E1),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF00C853)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF3FE56C)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0x80E53935)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        errorStyle: GoogleFonts.inter(
+                          color: Color(0xFFE53935),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFE53935)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      keyboardType: TextInputType.phone,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Kérem adja meg a telefonszámot';
+                        }
+                        return null;
+                      },
+                    ), //telefonszám
+                    SizedBox(
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [],
                       ),
                     ),
                   ],
                 ),
               ),
-              Stack(
-                children: [
-                  Positioned(
-                    bottom: 0,
-                    left: 15,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Vissza'),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 15,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {}
-                      },
-                      child: Text('Vasarlas'),
-                    ),
-                  ),
-                ],
-              ),
+              SizedBox(
+                height: 50,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      bottom: 0,
+                      left: 15,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF131313),
+                          foregroundColor: Color(0xFF00C853),
+                          textStyle: GoogleFonts.inter(
+                            color: Color(0xFFE5E2E1),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        child: Text('Vissza'),
+                      ),
+                    ), //vissza button
+                    Positioned(
+                      bottom: 0,
+                      right: 15,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {}
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF00C853),
+                          foregroundColor: Color(0xFF002108),
+                          textStyle: GoogleFonts.inter(
+                            color: Color(0xFFE5E2E1),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        child: Text('Vasarlas'),
+                      ),
+                    ), //vasarlas button
+                  ],
+                ),
+              ), //buttons
             ],
           ),
         ),
