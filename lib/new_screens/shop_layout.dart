@@ -50,21 +50,6 @@ class _Header extends StatelessWidget {
                   fontSize: 48,
                 ),
               ),
-              IconButton(
-                icon: Badge.count(
-                  backgroundColor: Color(0x803FE56C),
-                  isLabelVisible: true,
-                  count: 3,
-                  child: const Icon(
-                    Icons.shopping_bag,
-                    color: Color(0xFF3FE56C),
-                    size: 32,
-                  ),
-                ),
-                onPressed: () {
-                  print('Shopping bag icon pressed');
-                },
-              ),
             ],
           ),
           Row(
@@ -234,7 +219,7 @@ class _ProductItem extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return _BuyForm();
+                    return _BuyForm(productId: title);
                   },
                 );
                 print('pressed');
@@ -262,6 +247,10 @@ class _ProductItem extends StatelessWidget {
 }
 
 class _BuyForm extends StatefulWidget {
+  final String productId;
+
+  const _BuyForm({required this.productId});
+
   @override
   _BuyFormState createState() => _BuyFormState();
 }
@@ -269,13 +258,21 @@ class _BuyForm extends StatefulWidget {
 class _BuyFormState extends State<_BuyForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final List<String> _sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+  final List<String> _gender = ['Férfi', 'Nő'];
+
+  String selectedSize = 'S';
+  String selectedGender = 'Férfi';
+  String name = '';
+  String phoneNumber = '';
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: Container(
         height: 300,
-        margin: EdgeInsets.symmetric(vertical: 150, horizontal: 33),
+        margin: EdgeInsets.symmetric(vertical: 200, horizontal: 33),
         decoration: BoxDecoration(
           border: BoxBorder.all(color: Color(0x803FE56C), width: 1.5),
           color: Color(0xFF080A08),
@@ -284,7 +281,7 @@ class _BuyFormState extends State<_BuyForm> {
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 margin: EdgeInsets.all(15),
@@ -341,6 +338,7 @@ class _BuyFormState extends State<_BuyForm> {
                         if (value == null || value.isEmpty) {
                           return 'Kérem adja meg a teljes nevét';
                         }
+                        name = value;
                         return null;
                       },
                     ), //teljes nev
@@ -384,20 +382,79 @@ class _BuyFormState extends State<_BuyForm> {
                         if (value == null || value.isEmpty) {
                           return 'Kérem adja meg a telefonszámot';
                         }
+                        phoneNumber = value;
                         return null;
                       },
                     ), //telefonszám
                     SizedBox(
                       height: 50,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [],
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          DropdownButton<String>(
+                            iconEnabledColor: Color(0x803FE56C),
+                            style: GoogleFonts.inter(
+                              color: Color(0xFFE5E2E1),
+                              fontWeight: FontWeight.w400,
+                            ),
+                            isExpanded: false,
+                            dropdownColor: Color(0xFF2D2D2D),
+                            borderRadius: BorderRadius.circular(15),
+                            underline: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0x803FE56C)),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            value: selectedSize,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedSize = newValue!;
+                              });
+                            },
+                            items: _sizes.map((String size) {
+                              return DropdownMenuItem<String>(
+                                value: size,
+                                child: Text(size),
+                              );
+                            }).toList(),
+                          ), //meret
+                          DropdownButton<String>(
+                            iconEnabledColor: Color(0x803FE56C),
+                            style: GoogleFonts.inter(
+                              color: Color(0xFFE5E2E1),
+                              fontWeight: FontWeight.w400,
+                            ),
+                            isExpanded: false,
+                            dropdownColor: Color(0xFF2D2D2D),
+                            borderRadius: BorderRadius.circular(15),
+                            underline: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0x803FE56C)),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            value: selectedGender,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedGender = newValue!;
+                              });
+                            },
+                            items: _gender.map((String gender) {
+                              return DropdownMenuItem<String>(
+                                value: gender,
+                                child: Text(gender),
+                              );
+                            }).toList(),
+                          ), //nemek
+                        ],
                       ),
-                    ),
+                    ), //Dropdown Menus
                   ],
                 ),
               ),
-              SizedBox(
+              Container(
+                margin: EdgeInsets.only(bottom: 15),
                 height: 50,
                 child: Stack(
                   children: [
@@ -424,7 +481,29 @@ class _BuyFormState extends State<_BuyForm> {
                       right: 15,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {}
+                          if (_formKey.currentState!.validate()) {
+                            db.collection('orders').add({
+                              'orderId': widget.productId,
+                              'name': name,
+                              'phoneNumber': phoneNumber,
+                              'size': selectedSize,
+                              'gender': selectedGender,
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Color(0xFF131313),
+                                content: Text(
+                                  'Sikeres vásárlás!',
+                                  style: GoogleFonts.manrope(
+                                    color: Color(0x803FE56C),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            );
+                            _formKey.currentState!.reset();
+                            Navigator.of(context).pop();
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF00C853),
