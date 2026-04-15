@@ -30,13 +30,10 @@ class FinalViewState extends State<FinalView> {
   }
 
   void animateToPage(int page) {
-    setState(() {
-      currentIndex = page;
-    });
     _pageController.animateToPage(
       page,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.decelerate,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.linearToEaseOut,
     );
   }
 
@@ -78,10 +75,6 @@ class FinalViewState extends State<FinalView> {
                     currentIndex: currentIndex,
                     onPressed: (val) {
                       animateToPage(val);
-
-                      setState(() {
-                        currentIndex = val;
-                      });
                     },
                   ),
                 ),
