@@ -22,7 +22,11 @@ class _ShopLayoutState extends State<ShopLayout> {
             physics: NeverScrollableScrollPhysics(),
             children: [
               _Header(),
-              SizedBox(height: 1400, child: _ProductList()),
+              Container(
+                height: 1400,
+                margin: EdgeInsets.only(top: 10),
+                child: _ProductList(),
+              ),
             ],
           ),
         ),
@@ -95,7 +99,7 @@ class _ProductListState extends State<_ProductList> {
                 marginBottom: isLastItem ? 800 : 64,
                 title: product['title'],
                 price: product['price'],
-                imageUrl: 'assets/VaradifiIcon.png',
+                imageUrl: product['imagePath'],
                 description: product['description'],
               );
             },
@@ -141,6 +145,7 @@ class _ProductItem extends StatelessWidget {
               child: Image.asset(imageUrl, fit: BoxFit.cover),
             ),
           ), //image
+          SizedBox(height: 5),
           SizedBox(
             height: 52,
             child: Stack(
@@ -191,7 +196,7 @@ class _ProductItem extends StatelessWidget {
                   top: 0,
                   right: 0,
                   child: Text(
-                    '\$$price',
+                    '$price RON',
                     style: GoogleFonts.manrope(
                       color: Color(0xFF3FE56C),
                       fontSize: 20,

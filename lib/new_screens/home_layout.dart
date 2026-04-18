@@ -373,7 +373,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                   itemBuilder: (context, index) {
                     final data = docs[index].data();
                     return _ShopItem(
-                      imagePath: 'assets/VaradifiIcon.png',
+                      imagePath: data['imagePath'],
                       title: data['title'] as String,
                       price: data['price'] as double,
                     );
@@ -443,7 +443,7 @@ class _ShopItemState extends State<_ShopItem> {
                   bottom: 0,
                   left: 24,
                   child: Text(
-                    "\$${widget.price}",
+                    "${widget.price} RON",
                     style: GoogleFonts.manrope(
                       color: Color(0xFFBBCBB8),
                       fontWeight: FontWeight.w300,
@@ -490,7 +490,7 @@ class _GatheringCard extends StatelessWidget {
                   bottom: 0,
                   left: 0,
                   child: Text(
-                    "Talalkozunk miden heten!",
+                    "Talalkozzunk miden heten!",
                     style: GoogleFonts.inter(
                       color: Color(0xFFE5E2E1),
                       fontWeight: FontWeight.w300,
