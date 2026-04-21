@@ -74,7 +74,11 @@ class _EventsListState extends State<_EventsList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: db.collection('events').snapshots(),
+      stream: db
+          .collection('events')
+          .orderBy('id', descending: true)
+          .limit(10)
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
