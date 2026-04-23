@@ -38,14 +38,15 @@ class _HeroImage extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         color: Color(0x15FFFFFF),
+        border: Border.all(color: Color(0xFF3FE56C), width: 1.5),
       ),
-      height: 350,
+      height: 600,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: Stack(
           fit: StackFit.expand,
           alignment: Alignment.bottomCenter,
-          children: [],
+          children: [Image.asset('assets/hero.png', fit: BoxFit.cover)],
         ),
       ),
     );

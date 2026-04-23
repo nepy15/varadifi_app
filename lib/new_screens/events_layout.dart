@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:varadifi_app/misc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:varadifi_app/noti_service.dart';
 
 final db = FirebaseFirestore.instance;
 
@@ -71,6 +72,22 @@ class _EventsList extends StatefulWidget {
 }
 
 class _EventsListState extends State<_EventsList> {
+  /*Future<void> checkForChanges() async {
+    final snapshot = db.collection('events').snapshots();
+    snapshot.listen(
+      (event) => NotiService().showNotification(
+        title: 'Uj esemény',
+        body: "Uj esemény érkezett!",
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkForChanges();
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
