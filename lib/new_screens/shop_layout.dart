@@ -227,7 +227,6 @@ class _ProductItem extends StatelessWidget {
                     return _BuyForm(productId: title);
                   },
                 );
-                print('pressed');
               },
               splashColor: Color(0x803FE56C),
               borderRadius: BorderRadius.circular(12),

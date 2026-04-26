@@ -8,7 +8,6 @@ import 'package:varadifi_app/final_view.dart';
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgoundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('Background message: ${message.messageId}');
 }
 
 Future<void> main() async {
@@ -31,17 +30,12 @@ Future<void> setupNotifications() async {
   );
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    final token = await messaging.getToken();
-    print('FCM Token: $token');
-
     await messaging.subscribeToTopic('Varadifi');
-    print('Subscribed to Varadifi topic');
   }
 }
 
 void setupMessageHandlers(BuildContext context) {
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    print('User tapped backgorund notification');
     if (message.messageId != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -54,7 +48,6 @@ void setupMessageHandlers(BuildContext context) {
 
   FirebaseMessaging.instance.getInitialMessage().then((message) {
     if (message != null) {
-      print('App opened from terminated state via notification');
       handleNotificationNavigation(context, message);
     }
   });
