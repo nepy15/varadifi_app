@@ -66,6 +66,9 @@ class MainApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+
     return MaterialApp(debugShowCheckedModeBanner: false, home: FinalView());
   }
 }
