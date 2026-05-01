@@ -46,7 +46,7 @@ class FinalViewState extends State<FinalView> {
     ];
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: newAppBar,
+      //appBar: newAppBar,
       body: SafeArea(
         bottom: false,
         child: Stack(

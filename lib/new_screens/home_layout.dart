@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:varadifi_app/misc.dart';
@@ -20,10 +18,19 @@ class HomePage extends StatelessWidget {
       backgroundColor: backgroundColor,
       body: ListView(
         children: [
+          Center(
+            child: Text(
+              'Varadifi',
+              style: GoogleFonts.poppins(
+                fontSize: 32,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF3FE56C),
+              ),
+            ),
+          ),
           _HeroImage(),
-          //_FeaturedEvent(),
-          _FeaturedMerch(onNavigate: onNavigate),
           _GatheringCard(),
+          _FeaturedMerch(onNavigate: onNavigate),
         ],
       ),
     );
@@ -34,13 +41,13 @@ class _HeroImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 18, vertical: 48),
+      margin: EdgeInsets.only(right: 18, left: 18, top: 48, bottom: 45),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         color: Color(0x15FFFFFF),
         border: Border.all(color: Color(0xFF3FE56C), width: 1.5),
       ),
-      height: 600,
+      height: 250,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: Stack(
@@ -382,6 +389,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                 ),
               ),
             ),
+            SizedBox(height: 80),
           ],
         );
       },
@@ -464,9 +472,8 @@ class _ShopItemState extends State<_ShopItem> {
 class _GatheringCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 48),
-      height: 550,
+    return SizedBox(
+      height: 480,
       child: Column(
         children: [
           SizedBox(

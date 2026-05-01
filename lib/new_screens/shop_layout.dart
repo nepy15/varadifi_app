@@ -46,7 +46,7 @@ class _Header extends StatelessWidget {
             spacing: 15,
             children: [
               Text(
-                'Alkalmak',
+                'Merch-ek',
                 style: GoogleFonts.manrope(
                   color: Color(0xFFE5E2E1),
                   fontWeight: FontWeight.w800,
@@ -96,7 +96,7 @@ class _ProductListState extends State<_ProductList> {
               final isLastItem = index == products.length - 1;
               final product = products[index];
               return _ProductItem(
-                marginBottom: isLastItem ? 800 : 64,
+                marginBottom: isLastItem ? 900 : 64,
                 title: product['title'],
                 price: product['price'],
                 imageUrl: product['imagePath'],
