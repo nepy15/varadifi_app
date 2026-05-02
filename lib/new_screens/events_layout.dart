@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:varadifi_app/misc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -103,6 +104,8 @@ class _EventsListState extends State<_EventsList> {
                 description: events[index]['description'],
                 time: events[index]['time'],
                 location: events[index]['location'],
+                showLink: events[index]['enableLink'],
+                link: events[index]['link'],
               );
             },
           ),
@@ -121,6 +124,8 @@ class _EventCard extends StatelessWidget {
   final String description;
   final String time;
   final String location;
+  final bool showLink;
+  final String link;
 
   const _EventCard({
     this.marginBottom = 24,
@@ -130,6 +135,8 @@ class _EventCard extends StatelessWidget {
     required this.description,
     required this.time,
     required this.location,
+    required this.showLink,
+    required this.link,
   });
 
   @override
@@ -191,6 +198,26 @@ class _EventCard extends StatelessWidget {
               color: Color(0xFFBBCBB8),
               fontWeight: FontWeight.w400,
               fontSize: 16,
+            ),
+          ),
+          Visibility(
+            visible: showLink,
+            child: SizedBox(
+              height: 30,
+              child: InkWell(
+                onTap: () => launchUrlString(link),
+                child: Center(
+                  child: Text(
+                    'Tovabbi infohoz kattints ide!',
+                    style: GoogleFonts.inter(
+                      color: Colors.lime,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
           Container(
