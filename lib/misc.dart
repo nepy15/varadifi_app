@@ -84,7 +84,7 @@ class NavBarState extends State<NavBar> {
               widget.onPressed(index);
             },
             child: AnimatedContainer(
-              width: 100,
+              width: isSelected ? 100 : 50,
               curve: Curves.bounceIn,
               duration: Duration(microseconds: 250),
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -107,13 +107,19 @@ class NavBarState extends State<NavBar> {
                     color: isSelected ? Color(0xFF002108) : Color(0xFF78716C),
                   ),
                   SizedBox(height: 4),
-                  Text(
-                    items[index]['label'] as String,
-                    style: TextStyle(
-                      color: isSelected ? Color(0xFF002108) : Color(0xFF78716C),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 10,
-                      letterSpacing: 0.25,
+                  Visibility(
+                    visible: isSelected,
+                    child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      items[index]['label'] as String,
+                      style: TextStyle(
+                        color: isSelected
+                            ? Color(0xFF002108)
+                            : Color(0xFF78716C),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 10,
+                        letterSpacing: 0.25,
+                      ),
                     ),
                   ),
                 ],
