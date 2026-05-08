@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              'Varadifi',
+              'Váradifi',
               style: GoogleFonts.poppins(
                 fontSize: 32,
                 fontWeight: FontWeight.w600,
@@ -329,7 +329,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                   Positioned(
                     left: 24,
                     child: Text(
-                      'Varadifis merch-ek',
+                      'Váradifis merch-ek',
                       style: GoogleFonts.manrope(
                         color: Color(0xFFE5E2E1),
                         fontWeight: FontWeight.w800,
@@ -344,7 +344,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                       width: 60.04,
                       child: GestureDetector(
                         onTap: () {
-                          widget.onNavigate(2);
+                          widget.onNavigate(3);
                         },
                         child: Row(
                           children: [
@@ -498,7 +498,7 @@ class _GatheringCard extends StatelessWidget {
                   bottom: 0,
                   left: 0,
                   child: Text(
-                    "Talalkozzunk miden heten!",
+                    "Találkozzunk minden héten!",
                     style: GoogleFonts.inter(
                       color: Color(0xFFE5E2E1),
                       fontWeight: FontWeight.w300,
@@ -516,14 +516,14 @@ class _GatheringCard extends StatelessWidget {
             icon: Icons.people,
           ),
           _EventCard(
-            title: "Gyulekezeti alkalom",
-            time: "Csutortok, 18:00",
+            title: "Gyülekezeti alkalom",
+            time: "Csütörtök, 18:00",
             place: "Nagyterem",
             icon: Icons.church,
           ),
           _EventCard(
-            title: "Gyulekezeti alkalom",
-            time: "Vasarnap, 10:00 & 18:00",
+            title: "Gyülekezeti alkalom",
+            time: "Vasárnap, 10:00 & 18:00",
             place: "Nagyterem",
             icon: Icons.church,
           ),

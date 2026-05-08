@@ -232,7 +232,7 @@ class _ProductItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: Center(
                 child: Text(
-                  'Vasarlas',
+                  'Vásárlás',
                   style: GoogleFonts.manrope(
                     color: Color(0xFF002108),
                     fontSize: 14,
@@ -290,7 +290,7 @@ class _BuyFormState extends State<_BuyForm> {
               Container(
                 margin: EdgeInsets.all(15),
                 child: Text(
-                  'Vasarlas',
+                  'Vásárlás',
                   style: GoogleFonts.manrope(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -310,7 +310,7 @@ class _BuyFormState extends State<_BuyForm> {
                         fontSize: 15,
                       ),
                       decoration: InputDecoration(
-                        labelText: 'Teljes nev',
+                        labelText: 'Teljes név',
                         labelStyle: GoogleFonts.inter(
                           color: Color(0xFFE5E2E1),
                           fontWeight: FontWeight.w500,
@@ -395,33 +395,36 @@ class _BuyFormState extends State<_BuyForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          DropdownButton<String>(
-                            iconEnabledColor: Color(0x803FE56C),
-                            style: GoogleFonts.inter(
-                              color: Color(0xFFE5E2E1),
-                              fontWeight: FontWeight.w400,
-                            ),
-                            isExpanded: false,
-                            dropdownColor: Color(0xFF2D2D2D),
-                            borderRadius: BorderRadius.circular(15),
-                            underline: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Color(0x803FE56C)),
-                                borderRadius: BorderRadius.circular(15),
+                          Visibility(
+                            visible: widget.productId != 'Pix',
+                            child: DropdownButton<String>(
+                              iconEnabledColor: Color(0x803FE56C),
+                              style: GoogleFonts.inter(
+                                color: Color(0xFFE5E2E1),
+                                fontWeight: FontWeight.w400,
                               ),
+                              isExpanded: false,
+                              dropdownColor: Color(0xFF2D2D2D),
+                              borderRadius: BorderRadius.circular(15),
+                              underline: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0x803FE56C)),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ),
+                              value: selectedSize,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedSize = newValue!;
+                                });
+                              },
+                              items: _sizes.map((String size) {
+                                return DropdownMenuItem<String>(
+                                  value: size,
+                                  child: Text(size),
+                                );
+                              }).toList(),
                             ),
-                            value: selectedSize,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedSize = newValue!;
-                              });
-                            },
-                            items: _sizes.map((String size) {
-                              return DropdownMenuItem<String>(
-                                value: size,
-                                child: Text(size),
-                              );
-                            }).toList(),
                           ), //meret
                           DropdownButton<String>(
                             iconEnabledColor: Color(0x803FE56C),
@@ -517,7 +520,7 @@ class _BuyFormState extends State<_BuyForm> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        child: Text('Vasarlas'),
+                        child: Text('Vásárlás'),
                       ),
                     ), //vasarlas button
                   ],

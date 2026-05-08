@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:varadifi_app/new_screens/ahitat_layout.dart';
 import 'package:varadifi_app/new_screens/events_layout.dart';
 import 'package:varadifi_app/misc.dart';
 import 'package:varadifi_app/new_screens/home_layout.dart';
@@ -41,6 +42,7 @@ class FinalViewState extends State<FinalView> {
   Widget build(BuildContext context) {
     final screens = [
       HomePage(onNavigate: animateToPage),
+      AhitatLayout(),
       EventsLayout(),
       ShopLayout(),
     ];

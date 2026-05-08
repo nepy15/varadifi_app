@@ -60,9 +60,10 @@ class NavBar extends StatefulWidget {
 
 class NavBarState extends State<NavBar> {
   final items = [
-    {'icon': Icons.home, 'label': 'HOME'},
-    {'icon': Icons.calendar_month, 'label': 'EVENTS'},
-    {'icon': Icons.shopping_bag, 'label': 'SHOP'},
+    {'icon': Icons.home, 'label': 'FŐOLDAL'},
+    {'icon': Icons.book, 'label': 'ÁHITAT'},
+    {'icon': Icons.calendar_month, 'label': 'ALKALMAK'},
+    {'icon': Icons.shopping_bag, 'label': 'BOLT'},
   ];
 
   @override
