@@ -22,11 +22,7 @@ class _ShopLayoutState extends State<ShopLayout> {
             physics: NeverScrollableScrollPhysics(),
             children: [
               _Header(),
-              Container(
-                height: 1400,
-                margin: EdgeInsets.only(top: 10),
-                child: _ProductList(),
-              ),
+              _ProductList(),
             ],
           ),
         ),
@@ -90,22 +86,25 @@ class _ProductListState extends State<_ProductList> {
         }
         if (snapshot.hasData) {
           final products = snapshot.data!.docs;
-          return ListView.builder(
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              final isLastItem = index == products.length - 1;
-              final product = products[index];
-              return _ProductItem(
-                marginBottom: isLastItem ? 900 : 64,
-                title: product['title'],
-                price: product['price'],
-                imageUrl: product['imagePath'],
-                description: product['description'],
-              );
-            },
+          return Container(
+            height: 1400,
+            margin: EdgeInsets.only(top: 10),
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return _ProductItem(
+                  title: product['title'],
+                  price: product['price'].toDouble(),
+                  imageUrl: product['imagePath'],
+                  description: product['description'],
+                );
+              },
+            ),
           );
         }
-        return CircularProgressIndicator(color: Color(0xFF3FE56C));
+        return Center(child: CircularProgressIndicator(color: Color(0xFF3FE56C)));
       },
     );
   }
