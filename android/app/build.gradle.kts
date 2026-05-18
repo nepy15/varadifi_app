@@ -19,7 +19,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.varadifi_app"
+    namespace = "com.varadifi.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
