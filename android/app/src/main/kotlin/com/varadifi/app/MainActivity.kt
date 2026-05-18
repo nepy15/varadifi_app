@@ -1,4 +1,4 @@
-package com.example.varadifi_app
+package com.varadifi.app
 
 import io.flutter.embedding.android.FlutterActivity
 
