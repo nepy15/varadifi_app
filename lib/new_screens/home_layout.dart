@@ -321,7 +321,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
         return Column(
           children: [
             SizedBox(
-              height: 32,
+              height: 25,
               width: double.infinity,
               child: Stack(
                 alignment: Alignment.center,
@@ -370,7 +370,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
                 ],
               ),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 12),
             SizedBox(
               height: 580,
               child: ScrollConfiguration(
@@ -421,7 +421,7 @@ class _ShopItemState extends State<_ShopItem> {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(left: 0, right: 15),
+            margin: EdgeInsets.only(left: 0, right: 15, bottom: 7),
             height: 500,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
@@ -433,7 +433,7 @@ class _ShopItemState extends State<_ShopItem> {
             ),
           ),
           SizedBox(
-            height: 52,
+            height: 50,
             child: Stack(
               children: [
                 Positioned(
