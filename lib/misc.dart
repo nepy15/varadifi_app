@@ -84,7 +84,7 @@ class NavBarState extends State<NavBar> {
               widget.onPressed(index);
             },
             child: AnimatedContainer(
-              width: isSelected ? 100 : 50,
+              width: isSelected ? 100 : 100,
               curve: Curves.bounceIn,
               duration: Duration(microseconds: 250),
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:varadifi_app/misc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:varadifi_app/new_screens/shop_layout.dart';
 
 const miniScreenMaxWidth = 390;
 final db = FirebaseFirestore.instance;
@@ -372,7 +373,7 @@ class _FeaturedMerchState extends State<_FeaturedMerch> {
             ),
             SizedBox(height: 12),
             SizedBox(
-              height: 580,
+              height: 500,
               child: ScrollConfiguration(
                 behavior: AllScrollBehavior(),
                 child: ListView.builder(
@@ -416,13 +417,13 @@ class _ShopItemState extends State<_ShopItem> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 512,
+      width: 380,
       height: 580,
       child: Column(
         children: [
           Container(
             margin: EdgeInsets.only(left: 0, right: 15, bottom: 7),
-            height: 500,
+            height: 400,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
               color: Color(0xFF1C1B1B),
